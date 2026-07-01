@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# debugging nginx port 80
+
+# Install Nginx if not already installed
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Remove the default Nginx configuration file
+sudo rm /etc/nginx/sites-enabled/default
+
+# Create a symbolic link to enable the new configuration
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# Restart Nginx
+sudo service nginx restart
+

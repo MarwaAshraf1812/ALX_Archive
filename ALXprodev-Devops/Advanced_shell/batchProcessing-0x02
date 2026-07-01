@@ -1,0 +1,23 @@
+#!/bin/bash
+
+pokemon_list=("bulbasaur" "ivysaur" "venusaur" "charmander" "charmeleon")
+
+BASE_URL="https://pokeapi.co/api/v2/pokemon"
+
+DELAY=2
+
+for pokemon in "${list_of_pokemons[@]}"; do
+  # Convert Pokémon name to lowercase for the filename
+  file_name=$(echo "$pokemon" | tr '[:upper:]' '[:lower:]').json
+
+  echo "Fetching data for $pokemon..."
+  curl -s -o "$file_name" "${BASE_URL}/${pokemon}"
+
+  if [ $? -eq 0 ]; then
+    echo "Data for $pokemon has been saved to $file_name"
+  else
+    echo "Failed to fetch data for $pokemon"
+  fi
+
+  sleep "$DELAY"
+done

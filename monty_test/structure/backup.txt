@@ -1,0 +1,53 @@
+void tokenize_file(const char* filepath, unsigned int *count, int *line_end, int *wordsCount[])
+{
+    FILE* file = fopen(filepath, "r");
+    if (file == NULL) {
+        perror("Error opening file");
+        return;
+    }
+    int numwords = 0;
+    int linesCount = count_lines(file);
+    lines = (char***)malloc(linesCount * sizeof(char**));
+    int lineIndex = 0;
+    char buffer[1024];
+    char last, lastlast;
+    last = lastlast = 'a';
+    while (fgets(buffer, sizeof(buffer), file) != NULL)
+    {
+        last = buffer[0];
+        char **words = tokenize_line(buffer, &numwords);
+        lines[lineIndex] = words;
+        (*wordsCount)[lineIndex] = numwords;
+        lineIndex++;
+    }
+    if (last == '\n')
+        *line_end = 1;
+
+    *count = linesCount;
+    fclose(file);
+}
+
+
+void free_lines(char ***lines, unsigned int line_count, int is_last, int words_count[])
+{
+    if (lines == NULL) {        
+        return;
+    }
+    int i;
+	for (i = 0; i < line_count; i++)
+	{
+        int word_num = words_count[i];
+        for (int j = 0; j < word_num; j++)
+        {
+            if (lines[i][j] != NULL)
+            {
+                free(lines[i][j]);
+            }
+        }
+        free(lines[i]);
+	}
+    if (is_last == 1) {
+        free(lines[i]);
+    }
+    free(lines);
+}

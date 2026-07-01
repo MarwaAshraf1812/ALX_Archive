@@ -1,0 +1,8 @@
+#Task_one's purpose:
+    Asset Caching:
+
+        -Add a variable cache_id to the render_template function in '0-hbnb.py'. This variable will hold a UUID.
+        -In '0-hbnb.html', add this cache_id as a query string to the URL of each <link> tag, ensuring that each asset has a unique identifier.
+        -This helps in avoiding caching issues where browsers might not recognize changes in static assets.
+    =============================================================
+#Task_two's purpose:

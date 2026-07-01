@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Define the Pokémon name
+POKEMON_NAME="pikachu"
+
+# Define the API URL
+API_URL="https://pokeapi.co/api/v2/pokemon/$POKEMON_NAME"
+
+# Define output files
+OUTPUT_FILE="data.json"
+ERROR_FILE="errors.txt"
+
+# Make the API request and save the response
+curl -s -o "$OUTPUT_FILE" "$API_URL"
+
+# Check if the request was successful
+if [ $? -eq 0 ]; then
+  # Check if the output file contains valid JSON
+  if jq empty "$OUTPUT_FILE" 2>/dev/null; then
+    echo "Data for $POKEMON_NAME has been saved to $OUTPUT_FILE"
+  else
+    echo "Error: Invalid JSON response. Check $OUTPUT_FILE for details."
+    echo "Failed to fetch valid data for $POKEMON_NAME on $(date)" >> "$ERROR_FILE"
+    echo "Error details: Invalid JSON response" >> "$ERROR_FILE"
+    echo "API URL: $API_URL" >> "$ERROR_FILE"
+    echo "----------------------------------------" >> "$ERROR_FILE"
+  fi
+else
+  # Log the error to the error file
+  echo "Failed to fetch data for $POKEMON_NAME on $(date)" >> "$ERROR_FILE"
+  echo "Error details: curl exit code $?" >> "$ERROR_FILE"
+  echo "API URL: $API_URL" >> "$ERROR_FILE"
+  echo "----------------------------------------" >> "$ERROR_FILE"
+  echo "Error: Failed to retrieve data for $POKEMON_NAME. Check $ERROR_FILE for details."
+fi

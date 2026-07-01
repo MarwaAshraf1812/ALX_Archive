@@ -1,0 +1,19 @@
+=> MAX_ITEMS = 4 # It represents the maximum number of items that the cache can hold. This value is used to limit the size of the cache.
+
+=>  def __init__(self):
+        """ Initializes the cache.
+        """
+        self.cache_data = {}
+    =>>> Creates an empty dictionary self.cache_data to store the cached items.
+
+
+=>  def print_cache(self):
+    """ Prints the current contents of the cache.
+    """
+    print("Current cache:")
+    for key in sorted(self.cache_data.keys()):
+        print("{}: {}".format(key, self.cache_data.get(key)))
+
+    =>>> Iterates over the keys in self.cache_data, sorts them, and prints each key-value pair in the cache.
+
+
